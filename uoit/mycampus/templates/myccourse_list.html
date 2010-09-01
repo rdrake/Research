@@ -1,0 +1,94 @@
+{% extends "template.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/table.css" />
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/fullcalendar.css" />
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/datatables.css" />
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/eggplant/jquery-ui-1.8.4.custom.css" />
+{% endblock %}
+
+{% block content %}
+
+<form>
+  <table id="filter">
+    <tr><td>Code:</td><td><input type="text" name="code" value="{{ code }}" /></td></tr>
+    <tr><td>Title:</td><td><input type="text" name="title" value="{{ title }}" /></td></tr>
+    <tr><td>Instructor:</td><td><input type="text" name="instructor" value="{{ instructor }}" /></td></tr>
+    <tr><td>Term:</td><td><select name="term">
+      {% for t in avail_terms %}
+      <option{% if t == term %} selected{% endif %}>{{ t }}</option>
+      {% endfor %}
+    </select></td></tr>
+    <tr><td colspan="2"><input type="submit" value="Filter" /></td></tr>
+  </table>
+  
+  <input type="search" id="omnibar" placeholder="Tell me what you desire" autofocus />
+</form>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#table-tab">Table</a></li>
+    <li><a href="#calendar-tab">Calendar</a></li>
+  </ul>
+  <div id="table-tab">
+    <table class="listing" id="list">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Title</th>
+          <th>CRN</th>
+          <th>Section</th>
+          <th>Term</th>
+          <th>Instructor</th>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+  <div id="calendar-tab">
+    <div id="calendar"></div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block finale %}
+<script src="{{ MEDIA_URL }}js/fullcalendar.min.js"></script>
+<script src="{{ MEDIA_URL }}js/jquery-ui-1.8.4.custom.min.js"></script>
+<script src="{{ MEDIA_URL }}js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#tabs').tabs();
+    $('#tabs').bind('tabsshow', function(event, ui) {
+      $('#calendar').fullCalendar('render');
+    });
+    $('#calendar').fullCalendar({
+      'defaultView': 'agendaWeek',
+      'weekends': false,
+      'header': false,
+      'firstHour': 8,
+      'allDaySlot': false,
+      'height': 400,
+      'allDayDefault': false,
+      'events': 'calendar?term={{ term }}&code={{ code }}&title={{ title }}&instructor={{ instructor }}',
+      'year': 2010,
+      'month': 1,
+      'day': 1
+    });
+    $('#list').dataTable({
+      'bJQueryUI': true,
+      'sPaginationType': 'full_numbers',
+      'bSort': false,
+      'bFilter': false,
+      'bServerSide': true,
+      'iDisplayLength': 25,
+      'bProcessing': true,
+      'sAjaxSource': 'json?term={{ term }}&code={{ code }}&title={{ title }}&instructor={{ instructor }}'
+    });
+  });
+</script>
+{% endblock %}
