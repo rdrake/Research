@@ -26,6 +26,3 @@ print "Results 1-%i:" % matches.size()
 
 for m in matches:
 	print "%i: %i%% docid=%i [%s]" % (m.rank + 1, m.percent, m.docid, m.document.get_data())
-
-	for value in m.document.values():
-		print value.value
