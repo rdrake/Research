@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/public/css/table.css" />
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ object.title }} ({{ object.code }}) - {{ object.levels }}</h1>
+
+<p>In an ideal world, a description would go here.</p>
+
+<h2>Sections</h2>
+
+<table class="listing">
+  <tr><th>CRN</th><th>Section</th><th>Credits</th><th>Campus</th><th>Capacity</th><th>Actual</th></tr>
+  {% for section in sections %}
+  <tr>
+    <td>{{ section.crn }}</td>
+    <td>{{ section.section }}</td>
+    <td>{{ section.credits }}</td>
+    <td>{{ section.campus }}</td>
+    <td>{{ section.capacity }}</td>
+    <td>{{ section.actual }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

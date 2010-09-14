@@ -1,0 +1,28 @@
+h1 {
+  font-size: 200%;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+#container {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+nav {
+  text-align: center;
+  font-size: 120%;
+}
+
+#omnibar {
+  font-size: 300%;
+  width: 100%;
+}
+
+#filter {
+  /*display: none;*/
+}

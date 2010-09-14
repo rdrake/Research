@@ -1,0 +1,25 @@
+.dataTables_info {
+  float: left;
+  line-height: 30px;
+}
+
+.dataTables_paginate {
+  float: right;
+}
+
+.ui-button {
+  line-height: 30px;
+}
+
+/* Bottom toolbar */
+table + div.ui-toolbar {
+  padding: 10px;
+}
+
+.fg-button {
+  width: 30px;
+}
+
+.first, .previous, .next, .last {
+  width: 80px;
+}
